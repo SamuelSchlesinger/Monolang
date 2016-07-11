@@ -96,7 +96,14 @@ parallel to the syntax for their definition.
 > Application ::= Term Term  
 > CPattern ::= name | Name {CPattern}  
 > Destruction ::= Term SmallStepRight [(CPattern SmallStepRight Term) {TypeOr (CPattern SmallStepRight Term}]  
+> Abstraction ::= '?' name SmallStepRight Term
+> Construction ::= Name {Term}
+> Annotated ::= Assertion
 
 ## Type System
 
-
+The type system should work in such a way that it
+encourages totality. I think that, while it is
+practical that each of your programs terminate,
+it is often more important for real life to make
+them well defined over all of the possible inputs.
