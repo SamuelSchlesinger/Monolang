@@ -60,4 +60,43 @@ performance problems.
 > TypeDef ::= Name SmallStepRight Type  
 > SynDef ::= Name SmallStepLeft Name  
 
-> Statement ::= Term : Type | name {name} SmallStepLeft Term  
+Term construction is slightly different, as you
+can state which type a term is a construction,
+or a proof of, and you should also be able to
+state what reduction should take place on a small
+step, or what the definition of the function is.
+
+The syntax for this is going to look different
+than expected, but it will expand the things you
+are able to write, not reduce it. 
+
+> Assertion ::= Term Proves Type  
+> FunDef ::= name SmallStepRight Term  
+
+With each of these things in place, we can now show
+the syntax for each of the top level declarations.
+
+> Statement ::= Assertion | FunDef | TypeDef | SynDef  
+
+In selecting which terms are allowed in the language,
+I had a few things in mind. One, I would like this
+language to have as little sugar as possible, not for
+any reason of parsing, but in the spirit of mathematics.
+
+I must of course allow the lambda, and I must as well
+allow for type assertions next to all terms, as this
+is could be helpful in enforcing invariants for the user
+which may not be checked automatically by the type system.
+
+I must allow for applications of functions, as well as for
+destruction of constructions, the syntax of which will be
+parallel to the syntax for their definition.
+
+> Term ::= Application | Destruction | Abstraction | Construction | Annotated  
+> Application ::= Term Term  
+> CPattern ::= name | Name {CPattern}  
+> Destruction ::= Term SmallStepRight [(CPattern SmallStepRight Term) {TypeOr (CPattern SmallStepRight Term}]  
+
+## Type System
+
+
