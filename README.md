@@ -31,14 +31,33 @@ and uppercase letters are allowed in identifiers.
 The two productions following are the basis for
 the above.
 
-> Name ::= [A-Z]{A-Za-z}
-> name ::= [a-z]{A-Za-z}
+> Name ::= [A-Z]{A-Za-z}  
+> name ::= [a-z]{A-Za-z}  
 
 As well, there shall be two operators which will
 be used for a great variety of things, so I will
 define their productions as well.
 
-> SmallStepRight ::= "->"
-> SmallStepLeft  ::= "<-"
+> SmallStepRight ::= "->"  
+> SmallStepLeft  ::= "<-"  
+> TypeOr ::= "|"  
+> Proves ::= ":"  
 
+The type system is quite simple, it simply consists
+of unions of constructors.
 
+> Type ::= CDef {TypeOr CDef}  
+> CDef ::= Name {Type}  
+
+Unlike in Haskell and many other languages with
+algebraic data types, each construction can
+belong to arbitrarily many types, so it must
+be treated as an enumeration in a different,
+more global way. This can be optimized away,
+surely, but does not to me seem to present major
+performance problems.
+
+> TypeDef ::= Name SmallStepRight Type  
+> SynDef ::= Name SmallStepLeft Name  
+
+> Statement ::= Term : Type | name {name} SmallStepLeft Term  
